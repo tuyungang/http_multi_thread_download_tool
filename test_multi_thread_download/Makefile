@@ -28,7 +28,7 @@ $(TARGET): $(OBJS)
 
 
 $(OBJS): %.o:%.cpp
-	$(CXX) -g -c $< -o $@ $(CFLAGS) $(CURL_LIB)
+	$(CXX) -g -c $< -o $@ $(CFLAGS)
 
 
 clean:
