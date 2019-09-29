@@ -23,7 +23,12 @@ class CFtpTask : public CTask
         virtual ~CFtpTask(){}
 
     public:
+        map<int, CSeedFtpTask*> download_seg_map;
+
+    public:
         bool Run(){}
+        long GetDownloadFileSize(unsigned int *seg_num){}
+        bool AssignSegTask(){}
 };
 
 
@@ -34,7 +39,11 @@ class CSeedFtpTask : public CFtpTask
         virtual ~CSeedHttpTask(){}
 
     public:
+        CFtpTask *parent;
+
+    public:
         bool Run(){}
+        void SetParent(void *p) {parent = (CFtpTask *)p;}
 };
 
 
