@@ -27,11 +27,11 @@ class CHttpTask : public CTask
         /**
          * 下载文件地址
          */
-        string  download_url;
+        std::string  download_url;
         /**
          * 保存下载文件名
          */
-        string  download_file_path;
+        std::string  download_file_path;
         /**
          * 分段数
          */
@@ -57,7 +57,7 @@ class CHttpTask : public CTask
         /**
          * 保存分段子任务
          */
-        map<int, CSeedHttpTask*> download_seg_map;
+        std::map<int, CSeedHttpTask*> download_seg_map;
 
     public:
         /**

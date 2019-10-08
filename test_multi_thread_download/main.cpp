@@ -6,7 +6,7 @@
  * TODO: 多线程下载工具，可实现HTTP下载(实现)，ftp下载(可扩展)等下载方式，
  *       可设置下载阀值(线程数根据该阀值自动配置生成)，程序会自动判断是否
  *       需要多线程分段下载，程序具有一定扩展性，采用模板多态方式，无需改
- *       动主体多线程下载逻辑，只需添加相应任务子类文件即可。
+ *       动主体多线程下载逻辑，只需添加相应任务之类文件即可。
  * 
  * *******************************************************
  */
@@ -106,13 +106,13 @@ int main(int argc, char **argv)
     //CFtpTask *f_task = NULL;
 #endif
 
-    map<int, CSeedHttpTask*>::iterator it;
+    std::map<int, CSeedHttpTask*>::iterator it;
     if (type == 1) {
         h_task = new CHttpTask(download_url, seg_shreshold_size);
         unsigned int seg_num = 0;
         long file_size = h_task->GetDownloadFileSize(&seg_num);
         if (file_size <= 0) {
-            std::cout << "[error] get file size failed! please check url validity " << endl;
+            std::cout << "[error] get file size failed! please check url validity " << std::endl;
             goto PROC_EXIT;
         }
         h_task->SetWorkType(JOB_WORK_TYPE_HTTP);
@@ -123,23 +123,23 @@ int main(int argc, char **argv)
            http_pool = new CThreadPool<CHttpTask>((void*)&conf);
 
         } catch (...) {
-            std::cout << "[error] thread pool init failed!" << endl;
+            std::cout << "[error] thread pool init failed!" << std::endl;
             goto PROC_EXIT;
         }
 
         if (!h_task->AssignSegTask()) {
-            std::cout << "[warn] assign task failed!" << endl;
+            std::cout << "[warn] assign task failed!" << std::endl;
             http_pool->SetThreadExited();
             goto PROC_EXIT;
         }
 
         if (h_task->download_seg_map.empty()) {
-            std::cout << "[warn] assign task failed!" << endl;
+            std::cout << "[warn] assign task failed!" << std::endl;
             http_pool->SetThreadExited();
             goto PROC_EXIT;
         }
 
-        std::cout << "[notice] downloading..." << endl;
+        std::cout << "[notice] downloading..." << std::endl;
         it = h_task->download_seg_map.begin();
         while (it != h_task->download_seg_map.end()) {
             http_pool->append((*it).second);
@@ -156,7 +156,7 @@ int main(int argc, char **argv)
             std::cout << "[error] get file size failed! please check url validity " << endl;
             goto PROC_EXIT;
         }
-        f_task->SetWorkType(JOB_WORK_TYPE_HTTP);
+        f_task->SetWorkType(JOB_WORK_TYPE_FTP);
 
         threadpool_conf_t conf = {seg_num, 0, 10000};
         ftp_pool = NULL;

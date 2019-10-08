@@ -27,7 +27,7 @@
 
 #include "ProcDataDef.h"
 
-using namespace std;
+//using namespace std;
 
 #if _WIN32
 #pragma comment(lib, "libcurl.lib")

@@ -19,7 +19,7 @@ CHttpTask::CHttpTask(char *url, long shreshold_size)
 CHttpTask::~CHttpTask()
 {
     if (!download_seg_map.empty()) {
-        map<int, CSeedHttpTask*>::iterator it = download_seg_map.begin();
+        std::map<int, CSeedHttpTask*>::iterator it = download_seg_map.begin();
         while (it != download_seg_map.end()) {
             delete (*it).second;
             it++;
@@ -131,7 +131,7 @@ bool CHttpTask::AssignSegTask()
         t->start_pos = 0;
         t->end_pos = download_file_size - 1;
         t->seg_no = 1;
-        download_seg_map.insert(map<int,CSeedHttpTask*>::value_type(1, t));
+        download_seg_map.insert(std::map<int,CSeedHttpTask*>::value_type(1, t));
     }
     else{
         long seg_num = download_file_size / MAX_SEG_SIZE;
@@ -150,7 +150,7 @@ bool CHttpTask::AssignSegTask()
                     break;
             }
             t->seg_no = i + 1;
-            download_seg_map.insert(map<int,CSeedHttpTask*>::value_type(i + 1, t));
+            download_seg_map.insert(std::map<int,CSeedHttpTask*>::value_type(i + 1, t));
         }
     }
 
